@@ -4,7 +4,7 @@
 #### CDN 
 CSS
 ```html
-	<link rel="stylesheet" href="https://gitcdn.xyz/repo/ronaldaug/leditor/master/css/leditor.min.css">
+<link rel="stylesheet" href="https://gitcdn.xyz/repo/ronaldaug/leditor/master/css/leditor.min.css">
 ```
 
 JS
