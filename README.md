@@ -9,5 +9,5 @@ CSS
 
 JS
 ```javascript
-<script src="https://raw.githubusercontent.com/ronaldaug/leditor/master/js/leditor.min.js">
+<script src="https://gitcdn.xyz/repo/ronaldaug/leditor/master/js/leditor.min.js">
 ```
