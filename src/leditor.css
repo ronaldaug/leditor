@@ -1,0 +1,380 @@
+:root {
+  --le-dark: #222;
+  --le-light-bg: #e7e9ee;
+  --le-white: #fff;
+  --le-button-size: 2.2rem;
+}
+
+.leditor {
+  position: relative;
+  padding: 60px;
+  margin: 20px;
+  background: var(--le-white);
+  margin-bottom: 30px;
+}
+
+#l-editor a {
+  color: var(--le-dark);
+  text-decoration: none;
+}
+
+#l-editor b {
+  font-weight: bold;
+}
+
+.leditor.active-edit ::selection {
+  background: rgb(193, 255, 247);
+  /* WebKit/Blink Browsers */
+}
+
+.leditor.active-edit ::-moz-selection {
+  background: rgb(193, 255, 247);
+  /* Gecko Browsers */
+}
+
+.highlight {
+  background: rgb(193, 255, 247);
+}
+
+#l-editor {
+  background: var(--le-white);
+  margin: 20px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, .2);
+  padding: 20px;
+}
+
+#l-editor blockquote:after {
+  left: -40px;
+  top: 0;
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background: #ddd;
+  content: ''
+}
+
+#l-editor .temp-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+#l-editor blockquote {
+  position: relative
+}
+
+[contenteditable]:focus {
+  outline: 1px dashed var(--le-dark);
+}
+
+/* Image edit */
+.leditor.active-edit img {
+  transition: all ease 0.4s;
+}
+
+.leditor.active-edit img:hover {
+  cursor: pointer;
+}
+
+#l-editor .border-img {
+  transition: all ease 0.4s;
+  border: 2px dashed var(--le-dark);
+}
+
+#l-editor .img-tool {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+#l-editor .img-tool span {
+  padding: 6px 8px 0 8px;
+  font-size: 20px;
+  font-weight: normal;
+  margin: 0 10px;
+  border: 1px solid var(--le-light-bg);
+  border-radius: 4rem;
+}
+
+#l-editor .img-tool span:hover {
+  color: var(--le-white);
+  background: var(--le-dark);
+  border: 1px solid var(--le-light-bg);
+  cursor: pointer;
+}
+
+#l-editor .img-tool span:hover svg path {
+  fill: var(--le-white);
+}
+
+#l-editor .img-tool span:first-child {
+  animation: bounceIn linear 0.5s;
+}
+
+#l-editor .img-tool span:nth-child(2) {
+  animation: bounceIn linear 0.7s;
+}
+
+#l-editor .img-tool span:last-child {
+  animation: bounceIn linear 0.9s;
+  border: 1px solid rgb(249, 155, 155);
+}
+
+#l-editor .img-tool span:last-child:hover {
+  background: rgb(249, 155, 155);
+}
+
+
+#l-editor .one-col {
+  clear: both;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  float: none;
+}
+
+#l-editor .two-col {
+  clear: none;
+  width: 40%;
+  margin-left: auto;
+  margin-right: 30px;
+  float: left;
+}
+
+#l-editor .break-img {
+  clear: both;
+  height: 20px;
+  width: 100%;
+}
+
+#l-editor .three-dots {
+  margin: 0 0 30px;
+  font-size: 60px;
+  text-align: center;
+  color: #ddd;
+}
+
+#l-editor blockquote {
+  position: relative
+}
+
+#l-editor blockquote:after {
+  left: -40px;
+  top: 0;
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background: #ddd;
+  content: ''
+}
+
+@media (min-width:768px) {
+  #l-editor .one-col {
+    clear: both;
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+  }
+}
+
+@media (max-width:576px) {
+
+  #l-editor .two-col,
+  .one-col {
+    clear: both;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    float: none
+  }
+}
+
+svg.ticon,
+svg.imgicon {
+  max-width: 18px;
+  max-height: 18px;
+}
+
+svg.ticon path {
+  fill: var(--le-dark);
+}
+
+svg.ticon.imgicon path {
+  fill: #fff;
+}
+
+div.tooltip {
+  position: fixed;
+  z-index: 99;
+  text-align: center
+}
+
+div.tooltip .tool-wrap {
+  animation: bounceIn linear 0.3s;
+  position: absolute;
+  background: var(--le-white);
+  border: 1px solid var(--le-light-bg);
+  border-radius: 4rem;
+  width: 100%;
+  height: var(--le-button-size);
+  position: relative;
+  box-shadow: 0 2px 10px #00000014;
+}
+
+div.tooltip .tool-wrap button {
+  transition: all ease 0.3s;
+  margin: 0;
+  border: 0;
+  font-size: 1rem;
+  text-align: center;
+  height: var(--le-button-size);
+  width: var(--le-button-size);
+  line-height: var(--le-button-size);
+  background: var(--le-white);
+  color: var(--le-dark);
+}
+
+div.tooltip .tool-wrap button svg {
+  transform: translateY(.2rem);
+}
+
+div.tooltip .tool-wrap button:hover {
+  cursor: pointer;
+  color: var(--le-dark);
+  background: var(--le-light-bg);
+}
+
+div.tooltip .tool-wrap button:hover svg path {
+  fill: var(--le-dark);
+}
+
+div.tooltip .tool-wrap button:hover svg.imgicon path {
+  fill: #fff;
+}
+
+.tooltip button:first-child {
+  border-top-left-radius: 4rem;
+  border-bottom-left-radius: 4rem;
+  padding-left: 1rem;
+}
+
+.tooltip button:last-child {
+  padding-right: 1rem;
+  border-top-right-radius: 4rem;
+  border-bottom-right-radius: 4rem;
+}
+
+div.tooltip .tool-wrap button:focus {
+  outline: 0
+}
+
+
+
+/** Add Link Input **/
+.tooltip .image-box,
+.tooltip .link-box {
+  transition: all ease 0.4s;
+  transform: scaleX(0);
+  position: absolute;
+  opacity: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 24rem;
+  background: var(--le-white);
+  border: 1px solid var(--le-light-bg);
+  border-radius: 4rem;
+  height: var(--le-button-size);
+  box-shadow: 0 2px 10px #00000014;
+}
+
+.tooltip .image-box{
+  justify-content: center;
+}
+
+
+.tooltip.add-image .image-box,
+.tooltip.add-link .link-box {
+  transition: all ease 0.4s;
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.tooltip.add-image .image-box input:first-child,
+.tooltip.add-link .link-box input {
+  border: 1px solid #ddd;
+  width: 100%;
+  padding: .2rem;
+  margin: 0 .3rem 0 1rem;
+}
+
+
+.tooltip.add-image .image-box input:first-child:focus,
+.tooltip.add-link .link-box input:focus {
+  outline: none;
+}
+
+.tooltip.add-image .image-box label{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding-left:.4rem;
+    padding-right:1rem;
+    height: var(--le-button-size);
+    width: var(--le-button-size);
+    border-top-right-radius: 4rem;
+    border-bottom-right-radius: 4rem;
+}
+
+.tooltip.add-image .image-box .add-image-url-btn{
+  padding-top:.2rem;
+}
+
+.tooltip.add-image .image-box .add-image-url-btn,
+.tooltip.add-image .image-box .upload-image-btn,
+.tooltip.add-link .link-box .add-link-btn {
+  margin-right: .5rem;
+  border: 0;
+  transition: all ease 0.3s;
+  margin: 0;
+  font-size: 1rem;
+  text-align: center;
+  height: var(--le-button-size);
+  width: var(--le-button-size);
+  line-height: var(--le-button-size);
+  background: var(--le-white);
+  color: var(--le-dark);
+}
+
+.tooltip.add-image .image-box .add-image-url-btn:hover,
+.tooltip.add-image .image-box label:hover,
+.tooltip.add-link .link-box .add-link-btn:hover {
+  cursor: pointer;
+  color: var(--le-dark);
+  background: var(--le-light-bg);
+}
+
+.tooltip.add-image .tool-wrap,
+  .tooltip.add-link .tool-wrap {
+    display: none;
+}
+
+/* Animation */
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(30px);
+    transform: translateY(30px)
+  }
+
+  50% {
+    opacity: 1;
+    -webkit-transform: translateY(-5px);
+    transform: translateY(-5px)
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0)
+  }
+
+}
