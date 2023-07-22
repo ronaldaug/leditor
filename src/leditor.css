@@ -5,7 +5,7 @@
   --le-button-size: 2.2rem;
 }
 
-.leditor {
+#l-editor {
   position: relative;
   padding: 60px;
   margin: 20px;
@@ -13,9 +13,13 @@
   margin-bottom: 30px;
 }
 
+#l-editor img{
+  max-width:100%;
+}
+
 #l-editor a {
   color: var(--le-dark);
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 #l-editor b {
