@@ -361,6 +361,16 @@ div.tooltip .tool-wrap button:focus {
     display: none;
 }
 
+/** Positioner **/
+#l-editor .positioner-img{
+  padding:6px;
+  cursor:pointer;
+}
+
+#l-editor .positioner-img:hover{
+  background:#f6f8f7;
+}
+
 /* Animation */
 @keyframes bounceIn {
   0% {

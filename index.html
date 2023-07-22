@@ -11,20 +11,25 @@
 <body>
   <div id="l-editor">
     <h1>Pure javascript lightweight inline editor.</h1>
-    <p>No external libraries, no JQuery, it's only <span style="background:#c1fff7;">&nbsp;8kb </span> in gzip.</p>
+    <p>No external libraries, no JQuery, it's only <span style="background:#c1fff7;">&nbsp;7kb </span> in gzip.</p>
     <p><img src="http://picsum.photos/201"></p>
     <p class="three-dots" contenteditable="false"> . . . </p>
     <h3></b>Why reinvent the wheel?</b></h3>
-    <p>I am tired of adding a bunch of codes to my website to get a simple inline editor.</p>
+    <p>I am tired of adding a bunch of dependencies just to get a simple inline editor.</p>
     <h3></b>Will you add more featured?</b></h3>
     <p>No, I will keep this as simple as possible. So PR is not available. Thanks!</p>
     <div style="clear:both;"></div>
   </div>
 
-  <script src="src/leditor.js"></script>
+  <script src="src/leditor.min.js"></script>
 
   <script>
-    const LE = new Leditor('#l-editor');
+    // ["bold","underline","italic","link","unlink","image","h1","h2","p","quote","strike","left","center","right"]
+    const LE = new Leditor('#l-editor',
+      {
+        menus:["link","unlink","image","h1","p","quote"]
+      }
+    );
   </script>
 </body>
 

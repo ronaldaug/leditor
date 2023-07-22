@@ -23,7 +23,7 @@ class LEHooks {
 }
 
 class Leditor extends LEHooks {
-    constructor(selector) {
+    constructor(selector,options) {
         super();
         let fimage = `<svg class="ticon imgicon" width="476pt" height="476pt" data-com="image" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path data-com="image" fill="#fff" d="M0 0h24v24H0z"/><path data-com="image" d="M21 16v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-2m18-2V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v14m18-2-5.517-3.678a1 1 0 0 0-1.002-.063L3 18" stroke="#000" stroke-linejoin="round"/><circle data-com="image" cx="8" cy="9" r="2" stroke="#000" stroke-linejoin="round"/></svg>`;
         let fimage2 = `<svg class="ticon imgicon le-keep-tooltip" width="476pt" height="476pt" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path class="le-keep-tooltip" fill="#fff" d="M0 0h24v24H0z"/><path class="le-keep-tooltip" d="M21 16v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-2m18-2V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v14m18-2-5.517-3.678a1 1 0 0 0-1.002-.063L3 18" stroke="#000" stroke-linejoin="round"/><circle class="le-keep-tooltip" cx="8" cy="9" r="2" stroke="#000" stroke-linejoin="round"/></svg>`;
@@ -37,6 +37,10 @@ class Leditor extends LEHooks {
 
         this.currentSelection;
         this.tooltip;
+        this.default_options = {
+            menus:["bold","underline","italic","link","unlink","image","h1","h2","p","quote","strike","left","center","right"]
+        }
+        this.options = Object.assign(this.default_options,options)
         this.formatBlock = ['h1', 'h2', 'p', 'blockquote'];
         if(typeof selector === 'object'){
             this.leditor = selector;
@@ -44,13 +48,44 @@ class Leditor extends LEHooks {
         if(typeof selector === 'string'){
             this.leditor = document.querySelector(selector);
         }
-        this.menus = `<div class="link-box"><input class="le-keep-tooltip" /><button class="add-link-btn">${flink2}</button></div>
-        <div class="image-box"><input class="le-keep-tooltip" /><button class="add-image-url-btn">${flink2}</button>
-        <label class="le-keep-tooltip">
-        ${fimage2}
-        <input type="file" class="le-keep-tooltip le-upload-image" style="display:none">
-       </label></div>
-        <div class="tool-wrap"><button data-com="bold"><b data-com="bold">B</b></button><button data-com="underline"><u data-com="underline">U</u></button><button data-com="italic"><i data-com="italic">I</i></button><button data-com="link">${flink}</button><button data-com="unlink">${funlink}</button><button data-com="image">${fimage}</button><button data-com="h1">H1</button><button data-com="h2">H2</button><button data-com="p"><small data-com="p">P</small></button><button data-com="blockquote">${fquote}</button><button data-com="justifyLeft">${fleft}</button><button data-com="justifyCenter">${fcenter}</button><button data-com="justifyRight">${fright}</button>`;
+
+        const linkBox = `<div class="link-box"><input class="le-keep-tooltip" /><button class="add-link-btn">${flink2}</button></div>`;
+        const imageBox = `<div class="image-box"><input class="le-keep-tooltip" /><button class="add-image-url-btn">${flink2}</button><label class="le-keep-tooltip">${fimage2}<input type="file" class="le-keep-tooltip le-upload-image" style="display:none">
+       </label></div>`;
+        const boldMenu = `<button data-com="bold"><b data-com="bold">B</b></button>`;
+        const underlineMenu = `<button data-com="underline"><u data-com="underline">U</u></button>`;
+        const italicMenu = `<button data-com="italic"><i data-com="italic">I</i></button>`;
+        const linkMenu = `<button data-com="link">${flink}</button>`;
+        const unlinkMenu = `<button data-com="unlink">${funlink}</button>`;
+        const imageMenu = `<button data-com="image">${fimage}</button>`;
+        const h1Menu = `<button data-com="h1">H1</button>`;
+        const h2Menu = `<button data-com="h2">H2</button>`;
+        const pMenu = `<button data-com="p"><small data-com="p">P</small></button>`;
+        const quoteMenu = `<button data-com="blockquote">${fquote}</button>`;
+        const strikeMenu = `<button data-com="strikethrough"><strike data-com="strikethrough">s</strike></button>`;
+        const justifyLeftMenu = `<button data-com="justifyLeft">${fleft}</button>`;
+        const justifyCenterMenu = `<button data-com="justifyCenter">${fcenter}</button>`;
+        const justifyRightMenu = `<button data-com="justifyRight">${fright}</button></div>`;
+
+        const hasMenu = (menu) => this.options.menus.includes(menu);
+
+        this.menus = `${linkBox} ${imageBox} 
+        <div class="tool-wrap">
+            ${ hasMenu('bold') ? boldMenu : ''} 
+            ${ hasMenu('underline') ? underlineMenu : ''} 
+            ${ hasMenu('italic') ? italicMenu : ''} 
+            ${ hasMenu('link') ? linkMenu : ''} 
+            ${ hasMenu('unlink') ? unlinkMenu : ''} 
+            ${ hasMenu('image') ? imageMenu : ''} 
+            ${ hasMenu('h1') ? h1Menu : ''} 
+            ${ hasMenu('h2') ? h2Menu : ''}
+            ${ hasMenu('p') ? pMenu : ''}
+            ${ hasMenu('quote') ? quoteMenu : ''}
+            ${ hasMenu('strike') ? strikeMenu : ''}
+            ${ hasMenu('left') ? justifyLeftMenu : ''}
+            ${ hasMenu('center') ? justifyCenterMenu : ''}
+            ${ hasMenu('right') ? justifyRightMenu : ''}
+            `;
         this.init();
     }
 
@@ -327,6 +362,49 @@ class Leditor extends LEHooks {
             const top = imgPosition.top - editorScrollTop - 1;
             const left = imgPosition.left - editorScrollLeft - 1;
 
+            const flefti = `<svg class="imgicon positioner-img" width="476pt" height="476pt" data-col="left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M501.333 213.333h-192c-5.896 0-10.667 4.771-10.667 10.667s4.771 10.667 10.667 10.667h192c5.896 0 10.667-4.771 10.667-10.667s-4.771-10.667-10.667-10.667zM501.333 320H10.667C4.771 320 0 324.771 0 330.667s4.771 10.667 10.667 10.667h490.667c5.896 0 10.667-4.771 10.667-10.667C512 324.771 507.229 320 501.333 320zM330.667 426.667h-320C4.771 426.667 0 431.438 0 437.333 0 443.229 4.771 448 10.667 448h320c5.896 0 10.667-4.771 10.667-10.667-.001-5.895-4.771-10.666-10.667-10.666zM309.333 128h192c5.896 0 10.667-4.771 10.667-10.667s-4.771-10.667-10.667-10.667h-192c-5.896 0-10.667 4.771-10.667 10.667.001 5.896 4.772 10.667 10.667 10.667zM10.667 256h234.667c5.896 0 10.667-4.771 10.667-10.667V74.667C256 68.771 251.229 64 245.333 64H10.667C4.771 64 0 68.771 0 74.667v170.667C0 251.229 4.771 256 10.667 256zm224-21.333H25.75l48.917-48.917 35.125 35.125c4.167 4.167 10.917 4.167 15.083 0s4.167-10.917 0-15.083l-3.125-3.125 48.917-48.917 64 64v16.917zM21.333 85.333h213.333v102.25l-56.458-56.458c-4.167-4.167-10.917-4.167-15.083 0l-56.458 56.458-24.458-24.458c-4.167-4.167-10.917-4.167-15.083 0l-45.792 45.792V85.333z"/><path d="M106.667 149.333c11.76 0 21.333-9.573 21.333-21.333s-9.573-21.333-21.333-21.333c-11.76 0-21.333 9.573-21.333 21.333s9.572 21.333 21.333 21.333zM117.333 128h-10.656s-.01-.01-.01-.021l10.666.021z"/></svg>`;
+            const fcenteri = `<svg class="imgicon positioner-img" width="476pt" height="476pt" data-col="center"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M501.333 213.333h-64c-5.896 0-10.667 4.771-10.667 10.667s4.771 10.667 10.667 10.667h64c5.896 0 10.667-4.771 10.667-10.667s-4.771-10.667-10.667-10.667zM501.333 320H10.667C4.771 320 0 324.771 0 330.667s4.771 10.667 10.667 10.667h490.667c5.896 0 10.667-4.771 10.667-10.667C512 324.771 507.229 320 501.333 320zM330.667 426.667h-320C4.771 426.667 0 431.438 0 437.333 0 443.229 4.771 448 10.667 448h320c5.896 0 10.667-4.771 10.667-10.667-.001-5.895-4.771-10.666-10.667-10.666zM437.333 128h64c5.896 0 10.667-4.771 10.667-10.667s-4.771-10.667-10.667-10.667h-64c-5.896 0-10.667 4.771-10.667 10.667.001 5.896 4.772 10.667 10.667 10.667zM12.354 234.667h64c5.896 0 10.667-4.771 10.667-10.667s-4.771-10.667-10.667-10.667h-64c-5.896 0-10.667 4.771-10.667 10.667s4.771 10.667 10.667 10.667zM12.354 128h64c5.896 0 10.667-4.771 10.667-10.667s-4.771-10.667-10.667-10.667h-64c-5.896 0-10.667 4.771-10.667 10.667C1.688 123.229 6.458 128 12.354 128zM138.667 256h234.667c5.896 0 10.667-4.771 10.667-10.667V74.667C384 68.771 379.229 64 373.333 64H138.667C132.771 64 128 68.771 128 74.667v170.667c0 5.895 4.771 10.666 10.667 10.666zm224-21.333H153.741l48.926-48.917 35.125 35.125c4.167 4.167 10.917 4.167 15.083 0s4.167-10.917 0-15.083l-3.125-3.125 48.917-48.917 64 64v16.917zM149.333 85.333h213.333v102.25l-56.458-56.458c-4.167-4.167-10.917-4.167-15.083 0l-56.458 56.458-24.458-24.458c-4.167-4.167-10.917-4.167-15.083 0l-45.792 45.784V85.333z"/><path d="M234.667 149.333C246.438 149.333 256 139.76 256 128s-9.563-21.333-21.333-21.333c-11.771 0-21.333 9.573-21.333 21.333s9.562 21.333 21.333 21.333zm0-21.354l10.666.021h-10.667c.001 0 .001-.01.001-.021z"/></svg>`;
+            const frighti = `<svg style="transform:scaleX(-1)" class="imgicon positioner-img" width="476pt" height="476pt" data-col="right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M501.333 213.333h-192c-5.896 0-10.667 4.771-10.667 10.667s4.771 10.667 10.667 10.667h192c5.896 0 10.667-4.771 10.667-10.667s-4.771-10.667-10.667-10.667zM501.333 320H10.667C4.771 320 0 324.771 0 330.667s4.771 10.667 10.667 10.667h490.667c5.896 0 10.667-4.771 10.667-10.667C512 324.771 507.229 320 501.333 320zM330.667 426.667h-320C4.771 426.667 0 431.438 0 437.333 0 443.229 4.771 448 10.667 448h320c5.896 0 10.667-4.771 10.667-10.667-.001-5.895-4.771-10.666-10.667-10.666zM309.333 128h192c5.896 0 10.667-4.771 10.667-10.667s-4.771-10.667-10.667-10.667h-192c-5.896 0-10.667 4.771-10.667 10.667.001 5.896 4.772 10.667 10.667 10.667zM10.667 256h234.667c5.896 0 10.667-4.771 10.667-10.667V74.667C256 68.771 251.229 64 245.333 64H10.667C4.771 64 0 68.771 0 74.667v170.667C0 251.229 4.771 256 10.667 256zm224-21.333H25.75l48.917-48.917 35.125 35.125c4.167 4.167 10.917 4.167 15.083 0s4.167-10.917 0-15.083l-3.125-3.125 48.917-48.917 64 64v16.917zM21.333 85.333h213.333v102.25l-56.458-56.458c-4.167-4.167-10.917-4.167-15.083 0l-56.458 56.458-24.458-24.458c-4.167-4.167-10.917-4.167-15.083 0l-45.792 45.792V85.333z"/><path d="M106.667 149.333c11.76 0 21.333-9.573 21.333-21.333s-9.573-21.333-21.333-21.333c-11.76 0-21.333 9.573-21.333 21.333s9.572 21.333 21.333 21.333zM117.333 128h-10.656s-.01-.01-.01-.021l10.666.021z"/></svg>`;
+            const imagePositionWrap = createDOM('div', 'positioner', {
+                position: 'absolute',
+                background: '#fff',
+                boxShadow: '0 1px 6px #ddd',
+                top: (top) + 'px',
+                left: (left + (imgWidth/2)) + 'px',
+                display: 'flex',
+                marginLeft:'-28px',
+                marginTop:'-36px',
+                justifyContent:'space-around',
+                zIndex: 1
+            });
+
+            imagePositionWrap.innerHTML = flefti + fcenteri + frighti;
+
+            this.leditor.append(imagePositionWrap);
+
+            const removePositioners = () =>{
+                const allpositioners = this.leditor.querySelectorAll('.positioner');
+                allpositioners.forEach(pos=>pos.remove());
+            }
+
+            const imgPositions = this.leditor.querySelectorAll('svg.positioner-img');
+            imgPositions.forEach(each=>{
+                each.addEventListener('click',(e)=>{
+                    e.stopPropagation();
+                    const position = e.target.dataset.col; 
+                    if(position == 'left'){
+                        img.setAttribute('style','float:left;')
+                    }
+                    if(position == 'center'){
+                        img.setAttribute('style','display:block;margin:0 auto;')
+                    }
+                    if(position == 'right'){
+                        img.setAttribute('style','float:right;')
+                    }
+                        removePositioners();
+                })
+            })
+
             this.leditor.append(createDOM('span', 'resize-frame', {
                 margin: '10px',
                 position: 'absolute',
@@ -378,6 +456,7 @@ class Leditor extends LEHooks {
 
             document.querySelector('.resize-frame').onmousedown = () => {
                 resizing = true;
+                removePositioners();
                 return false;
             };
 
