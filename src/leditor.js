@@ -393,15 +393,16 @@ class Leditor extends LEHooks {
                     e.stopPropagation();
                     const position = e.target.dataset.col; 
                     if(position == 'left'){
-                        img.setAttribute('style','float:left;')
+                        setStyle(img,{float:'left'})
                     }
                     if(position == 'center'){
-                        img.setAttribute('style','display:block;margin:0 auto;')
+                        img.style.removeProperty('float');
+                        setStyle(img,{display:'block',margin:'0 auto'})
                     }
                     if(position == 'right'){
-                        img.setAttribute('style','float:right;')
+                        setStyle(img,{float:'right'})
                     }
-                        removePositioners();
+                    removePositioners();
                 })
             })
 
@@ -619,6 +620,16 @@ class Leditor extends LEHooks {
         document.execCommand(command, false, null);
     }
 
+    cleanup(){
+        const temps = document.querySelectorAll('.resize-frame,.resize,.le-temp-place,.positioner');
+        temps.forEach(temp=>temp.remove());
+    }
+
+    getContent(){
+        this.cleanup();
+        this.leditor.removeAttribute('contenteditable');
+        return this.leditor.innerHTML;
+    }
 
     init() {
 

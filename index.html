@@ -9,6 +9,7 @@
 </head>
 
 <body>
+  <button class="get-data-btn">Get Data</button>
   <div id="l-editor">
     <h1>Pure javascript lightweight inline editor.</h1>
     <p>No external libraries, no JQuery, it's only <span style="background:#c1fff7;">&nbsp;7kb </span> in gzip.</p>
@@ -21,15 +22,15 @@
     <div style="clear:both;"></div>
   </div>
 
-  <script src="src/leditor.min.js"></script>
+  <script src="src/leditor.js"></script>
 
   <script>
     // ["bold","underline","italic","link","unlink","image","h1","h2","p","quote","strike","left","center","right"]
-    const LE = new Leditor('#l-editor',
-      {
-        menus:["link","unlink","image","h1","p","quote"]
-      }
-    );
+    const LE = new Leditor('#l-editor');
+
+    document.querySelector('.get-data-btn').addEventListener('click',()=>{
+       console.log(LE.getContent())
+    })
   </script>
 </body>
 
