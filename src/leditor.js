@@ -325,9 +325,6 @@ class Leditor extends LEHooks {
 
     // https://stackoverflow.com/a/71180398/2134209
     enableImageResizeInDiv() {
-        if (!(/chrome/i.test(navigator.userAgent) && /google/i.test(window.navigator.vendor))) {
-            return;
-        }
         let resizing = false;
         let currentImage;
         const createDOM = function (elementType, className, styles) {
@@ -393,14 +390,14 @@ class Leditor extends LEHooks {
                     e.stopPropagation();
                     const position = e.target.dataset.col; 
                     if(position == 'left'){
-                        setStyle(img,{float:'left'})
+                        setStyle(img,{float:'left', marginRight:'1rem'})
                     }
                     if(position == 'center'){
                         img.style.removeProperty('float');
                         setStyle(img,{display:'block',margin:'0 auto'})
                     }
                     if(position == 'right'){
-                        setStyle(img,{float:'right'})
+                        setStyle(img,{float:'right', marginLeft:'1rem'})
                     }
                     removePositioners();
                 })
